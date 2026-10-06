@@ -61,6 +61,9 @@ a{color:var(--accent)}
 .star{border:0;background:none;font-size:22px;line-height:1;cursor:pointer;color:var(--muted);padding:2px 4px;border-radius:6px}
 .star[aria-pressed="true"]{color:var(--accent)}
 .trunc{font:400 11px var(--font-mono);color:var(--muted)}
+details{margin-top:8px}
+summary{cursor:pointer;font:500 13px var(--font-body);color:var(--accent);width:max-content}
+.abs{margin:8px 0 0;font-size:14px;color:var(--fg);max-width:68ch;text-wrap:pretty}
 .empty{color:var(--muted);padding:32px 0;text-align:center}
 footer{margin-top:40px;color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding-top:16px}
 footer p{margin:0 0 6px;max-width:68ch}
@@ -73,7 +76,7 @@ footer p{margin:0 0 6px;max-width:68ch}
   <header>
     <div class="kicker">50º Encontro Anual da ANPOCS · Unicamp · 7 a 9 de outubro de 2026</div>
     <h1>GT56. Inteligência Artificial, Sociedade, Cultura e Poder</h1>
-    <p class="meta">Coordenação: <b>Rafael de Almeida Evangelista</b> (Unicamp) e <b>Sergio Amadeu da Silveira</b> (UFABC). Todas as sessões no IEL, Miniauditório.</p>
+    <p class="meta">Coordenação: <b>Rafael de Almeida Evangelista</b> (Unicamp) e <b>Sergio Amadeu da Silveira</b> (UFABC). Sessões no IEL, Unicamp.</p>
   </header>
 
   <div class="bar">
@@ -88,7 +91,7 @@ footer p{margin:0 0 6px;max-width:68ch}
   <main id="out"></main>
 
   <footer>
-    <p>Fonte: página do GT56 no site do Encontro (encontro2026.anpocs.org.br), versão impressa em 06/10/2026. Os horários dos trabalhos dentro de cada sessão não constam na fonte.</p>
+    <p>Fonte: página do GT56 no site do Encontro (encontro2026.anpocs.org.br), versão impressa em 06/10/2026, com resumos. Os horários dos trabalhos dentro de cada sessão não constam na fonte.</p>
     <p>Títulos terminados em “…” aparecem cortados na fonte; confira o título completo no site do evento. O programa pode ter mudado desde a data da fonte.</p>
   </footer>
 </div>
@@ -97,30 +100,167 @@ footer p{margin:0 0 6px;max-width:68ch}
 const BASE="https://preprints.scielo.org/index.php/scielo/";
 const DAYS=[{id:"2026-10-07",label:"Qua 7/10"},{id:"2026-10-08",label:"Qui 8/10"},{id:"2026-10-09",label:"Sex 9/10"}];
 const S=[
-{n:1,day:"2026-10-07",from:"14:00",to:"17:00",title:"Soberania, dependência e regulação da IA",coord:"Rafael de Almeida Evangelista (Labjor/Unicamp)",deb:"Sergio Amadeu da Silveira (UFABC)",papers:[
- {t:"Dependência tecnológica e disputas de poder: soberania digital e regulação da inteligência artificial no Bra… Europeia",a:"Felipe Chieregato Gretschischkin (NDD-Cebrap)",tr:1},
- {t:"Empresas públicas de informática e soberania digital em escala subnacional no Brasil",a:"Sergio Braga (UFPR), Rangel Ramiro Ramos (INCT.DD/UFPR), Lucas Eduardo Zulin (UFPR), R… Linhares e Padilha (UFPR)",pdf:1},
- {t:"Governar a IA desde a periferia: como a regulação brasileira reproduz a dependência que diz enfrentar",a:"Ana Carolina das Neves Silva da Hora (Unicamp / Instituto da Hora), Janaina Oliveira Pamplona da Costa (DPCT Unicamp), …"},
- {t:"A Inteligência Artificial (IA) chinesa: características, desdobramentos externos e impactos para o Brasil",a:"Valéria Lopes Ribeiro (UFABC)"},
- {t:"Financeirização, dependência e transição verde-digital: o papel das debêntures na expansão de data cente…",a:"Antônio Victor de Mendonça Moreira (UFC), Alba Maria Pinho de Carvalho (UFC)",pdf:1,tr:1}]},
-{n:2,day:"2026-10-08",from:"14:00",to:"17:00",title:"Vigilância, dados e corpos",coord:"Sergio Amadeu da Silveira (UFABC)",deb:"Rafael de Almeida Evangelista (Labjor/Unicamp)",papers:[
- {t:"Emprego de Telemetria e Videomonitoramento em Caminhões do TRC Brasileiro: Quando Trabalhadores Conve… Ecossistema das Big Techs",a:"Diego dos Santos Moura Gonçalves (Universidade de São Paulo)",tr:1},
- {t:"Mulheres ciborgues: dados, poder e exploração do feminino no capitalismo de vigilância",a:"Fabiana Jordão Martinez"},
- {t:"Capitalismo de vigilância, desinformação e valores democráticos entre jovens de Porto Alegre/RS",a:"Jennifer Azambuja de Morais (UFRGS), Alexsander Dugno Chiodi (Instituto Democracia em Xeque), Felipe Silva Milane…"},
- {t:"Declarações de privacidade: dispositivos jurídico-discursivos de legitimação do poder instrumentalizador em u… brasileira",a:"Giovanna Costa Silva (UFU)",tr:1},
- {t:"O Panóptico Automatizado: Inteligência Artificial, Autoritarismo Digital e a Superação do Controle Orwellia…",a:"Bruno Konder Comparato (UNIFESP)",tr:1}]},
-{n:3,day:"2026-10-09",from:"09:00",to:"12:00",title:"Trabalho, subjetividade e produção cultural",coord:"Rafael de Almeida Evangelista (Labjor/Unicamp)",deb:"Sergio Amadeu da Silveira (UFABC)",papers:[
- {t:"Nova reestruturação produtiva e efeitos ideológicos da inteligência artificial: da flexibilidade ao gerenciam…",a:"Iuri Tonelo (UNIFESP)",tr:1},
- {t:"IA conversacional e modulação afetiva: antropomorfismo e poder nas interações humano–máquina",a:"David Leonardo Barsand de Leucas (UFSCar), Sylvia Iasulaitis (UFSCar)"},
- {t:"Fantasmas na Rede: presença e recepção de conteúdos gerados por IA nas redes sociais",a:"Tathiana Senne Chicarino (Escola de Sociologia e Política), Rosemary Segurado (Coletivo Digital)"},
- {t:"Inteligência artificial generativa e gambiarra contra-hegemônica: uma análise tecnopolítica dos vídeos do l… propaganda de guerra pró-Irã",a:"Nahema Falleiros (IEA-USP), Danielle Soares e Silva Bicudo Ferraro (PUC-SP/Edutecia), Artur Marques da Silva Neto (U…), Marcelo Aparecido de Faria Junior (UFABC)",tr:1},
- {t:"O jogo da escuta artificial: quando chatbots ocupam o lugar de conselheiros e terapeutas",a:"Mônica Gurjão Carvalho (UFABC)",link:BASE+"preprint/view/17483"}]},
-{n:4,day:"2026-10-09",from:"14:00",to:"17:00",title:"Estado, instituições e produção do conhecimento",coord:"Rosemary Segurado (Coletivo Digital)",deb:"Sergio Braga (UFPR)",papers:[
- {t:"Algoritmos de nível de rua? dilemas da digitalização no serviço público",a:"Gabriel Boscardim de Moraes (UFABC/Lablivre), Sergio Amadeu da Silveira (UFABC)",link:BASE+"preprint/view/17553"},
- {t:"Instituições Autoritárias Inscritas em Código: inteligência artificial e a reconfiguração da autoridade jornalí…",a:"Rafael de Almeida Evangelista (Labjor/Unicamp), Sâmela de Carvalho Lima (UNICAMP/UNASP), Ana Carolina Paes de …, Angelus Ferreira Simões (Unicamp)",tr:1},
- {t:"Mapeamento da adoção da inteligência artificial na educação básica brasileira: dependência tecnológica e … digital",a:"Lívia Carolina Vieira (IFSULDEMINAS), Danielle Soares e Silva Bicudo Ferraro (PUC-SP/Edutecia), Paula Cristina Santos … (UFRJ)",link:BASE+"authorDashboard/submission/17787",tr:1},
- {t:"Inteligência Artificial e a Decisão do Uso da Força: Racionalidade Algorítmica e Aceleração do Ciclo de Viol…",a:"Jonathan de Araujo de Assis (IPPRI-Unesp), Marianna Braghini Deus Deu (San Tiago Dantas)",tr:1},
- {t:"IA nas Ciências Sociais: balanço do debate para fortalecer uma agenda de pesquisa brasileira",a:"Priscila Pereira Faria Vieira (CEBRAP)",pdf:1}]}
+{
+"n": 1,
+"day": "2026-10-07",
+"from": "14:00",
+"to": "17:00",
+"title": "Soberania, dependência e regulação da IA",
+"coord": "Rafael de Almeida Evangelista (Labjor/Unicamp)",
+"deb": "Sergio Amadeu da Silveira (UFABC)",
+"papers": [
+{
+"t": "Dependência tecnológica e disputas de poder: soberania digital e regulação da inteligência artificial no Bra… Europeia",
+"a": "Felipe Chieregato Gretschischkin (NDD-Cebrap)",
+"tr": 1,
+"r": "Como a regulação de inteligência artificial mobiliza o discurso de soberania tecnológica de formas estruturalmente distintas na União Europeia e no Brasil? A hipótese central é que, na UE, o conceito de soberania funciona como um guarda-chuva discursivo para a formação de coalizões em torno de uma política industrial geo-dirigista, orientada pela percepção de dependência tecnológica e vulnerabilidade geopolítica. No Brasil, em contrapartida, o discurso de soberania tecnológica carece de ancoragem produtiva autônoma e reflete tensões não resolvidas do desenvolvimento capitalista dependente, manifestando-se de forma fragmentada em documentos como o PL nº 2338/2023, o PL nº 278/2026 (REDATA) e o Plano Brasileiro de Inteligência Artificial. A comparação propõe que o modo como cada contexto nacional articula o problema da IA não é contingente, mas estruturalmente condicionado por tradições de pensamento político e pela posição de cada sociedade na cadeia global de produção tecnológica."
+},
+{
+"t": "Empresas públicas de informática e soberania digital em escala subnacional no Brasil",
+"a": "Sergio Braga (UFPR), Rangel Ramiro Ramos (INCT.DD/UFPR), Lucas Eduardo Zulin (Universidade Federal do Paraná), Rafael Linhares e Padilha (UFPR)",
+"r": "O trabalho investiga como empresas públicas estaduais de tecnologia da informação podem sustentar condições institucionais para o uso soberano de inteligência artificial na administração pública. Parte-se do problema de que sistemas de IA dependem de dados, infraestrutura computacional, padrões técnicos, segurança e capacidade de governança, frequentemente mediados por Big Techs e provedores transnacionais. A questão central é em que medida empresas públicas de informática governam dados, nuvens, serviços digitais e capacidades técnicas sob controle público, reduzindo dependências tecnológicas e criando bases para políticas de IA mais transparentes, auditáveis e orientadas ao interesse coletivo. O estudo examina sete empresas das regiões Sul e Sudeste e situa a soberania digital subnacional como condição material para a adoção democrática de IA pelo Estado."
+},
+{
+"t": "Governar a IA desde a periferia: como a regulação brasileira reproduz a dependência que diz enfrentar",
+"a": "Ana Carolina das neves silva da Hora (Unicamp / Instituto da Hora), Janaina Oliveira Pamplona da Costa (DPCT Unicamp)",
+"r": "A regulação da inteligência artificial no Brasil opera sobre tecnologias concebidas, treinadas e comercializadas por empresas sediadas fora do país. Essa condição organiza a disputa: o debate não pergunta como orientar uma IA própria, mas como acomodar produtos que já chegam prontos. A questão central é: quais atores participam da regulação da IA no Brasil, como se comportam e que posições ocupam numa rede em que o país entra a partir de uma condição periférica, dependente de discussão produzida fora? A proposta é examinar essa governança não como instância neutra de coordenação, mas como campo sociotécnico e político atravessado por relações de poder. O argumento é que a governança da IA no país não apenas reflete, mas ativamente reproduz relações de dependência tecnológica, pela combinação de instrumentos formulados em contextos externos, de uma rede de atores assimétrica e de uma lógica que converte dependência estrutural em déficit a ser superado por mais tecnologia."
+},
+{
+"t": "A Inteligência Artificial (IA) chinesa: características, desdobramentos externos e impactos para o Brasil",
+"a": "Valéria Lopes Ribeiro (UFABC)",
+"r": "A Inteligência Artificial chinesa vem desenvolvendo-se rapidamente a partir de uma ampla estrutura institucional que combina apoio governamental e atuação empresarial. A IA chinesa avança por meio dos modelos de códigos abertos e a partir da capacidade de geração de dados industriais de alta qualidade e seu desenvolvimento apresenta desdobramentos para além da própria China. Cada vez mais o país difunde sua tecnologia de IA no mundo, com os países ampliando o uso dos modelos chineses e contribuindo para a construção da infraestrutura chinesa de IA. O objetivo do artigo é analisar as características, os desdobramentos e os impactos da Inteligência Artificial chinesa no mundo, especificamente no Brasil. Procura-se analisar de que modo o Brasil se integra ao ecossistema global de IA chinesa e se essa inserção representa uma alternativa benéfica ou se predominam assimetrias na forma como a tecnologia chinesa se insere no país."
+},
+{
+"t": "Financeirização, dependência e transição verde-digital: o papel das debêntures na expansão de data cente…",
+"a": "Antônio Victor de Mendonça Moreira (UFC), Alba Maria Pinho de Carvalho (UFC)",
+"tr": 1,
+"r": "O artigo examina a emissão de debêntures, por vezes estruturadas como títulos verdes, na expansão de Data Centers (DCs) no Brasil. Impulsionadas pela Inteligência Artificial (IA), tais instalações já respondem por 1,5% do consumo elétrico global, demandando práticas de descarbonização e regulação. Com mais de 80% de sua matriz elétrica renovável, o Brasil desponta como receptor estratégico de DCs ditos “sustentáveis”, operados por fontes livres de combustíveis fósseis. Nesse cenário, delimita-se a seguinte questão: de que modo os marcos institucionais e financeiros nacionais determinam os nexos entre as debêntures e a expansão de DCs no contexto da transição verde-digital? Argumenta-se que essa expansão via mercado de capitais converge com a financeirização do setor energético. Tal processo assume um caráter dependente, conduzido por demandas estrangeiras e por arquiteturas financeiras que expõem as infraestruturas à volatilidade das finanças e ampliam impactos socioambientais."
+}
+],
+"local": "IEL · Miniauditório"
+},
+{
+"n": 2,
+"day": "2026-10-08",
+"from": "14:00",
+"to": "17:00",
+"title": "Vigilância, dados e corpos",
+"coord": "Sergio Amadeu da Silveira (UFABC)",
+"deb": "Rafael de Almeida Evangelista (Labjor/Unicamp)",
+"papers": [
+{
+"t": "Emprego de Telemetria e Videomonitoramento em Caminhões do TRC Brasileiro: Quando Trabalhadores Conve… Ecossistema das Big Techs",
+"a": "Diego dos Santos Moura Gonçalves (Universidade de São Paulo)",
+"tr": 1,
+"r": "A questão central da minha pesquisa de doutorado direto, em andamento, é o uso de telemetria e videomonitoramento na rotina de trabalho de caminhoneiros ocupados no transporte rodoviário de cargas (TRC) brasileiro. Ambos são serviços digitais baseados em análise de big data com inteligência artificial que aplicam infraestruturas digitais em uma internet das coisas dedicada ao monitoramento eletrônico do trabalho. Na prática, essas tecnologias permitem visualizar, interpretar, antecipar e intervir à distância no ambiente de trabalho móvel do caminhão, a partir da captura e análise de dados provenientes de veículos, condutores e estradas, como localização, velocidade e condições de trânsito. A questão sociológica é pensar se e em que medida a eficiência prometida por tais recursos pode significar uma reconfiguração do gerenciamento do trabalho, em um gerenciamento algorítmico? E o quanto essa reconfiguração favorece uma reorganização do setor em torno de infraestruturas digitais?"
+},
+{
+"t": "Mulheres ciborgues: dados, poder e exploração do feminino no capitalismo de vigilância",
+"a": "Fabiana Jordão Martinez (Fabiana J. Martinez)",
+"r": "Este trabalho analisa a construção algorítmica de mulheres ciborgues no contexto do capitalismo de vigilância. Para tanto, usa o documentário da BBC (2024) sobre a influenciadora e modelo Aitana López, criada pela agência espanhola The Clueless, bem como o conteúdo de seu perfil no Instagram. Em diálogo com Haraway (1986) e Zuboff (2021), investiga-se em que medida os processos técnicos de criação de avatares femininos por inteligência artificial evidenciam novas assimetrias de poder entre seus criadores e as mulheres reais _ cujos dados, imagens e atributos corporais são extraídos e mobilizados em sua construção. Busca-se compreender como datasets e seus processos técnicos (prompts, fine-tuning) transformam mulheres reais em recursos exploráveis, contribuindo para formas específicas de objetificação feminina no capitalismo de vigilância."
+},
+{
+"t": "Capitalismo de vigilância, desinformação e valores democráticos entre jovens de Porto Alegre/RS",
+"a": "Jennifer Azambuja de Morais (UFRGS), Alexsander Dugno Chiodi (Instituto Democracia em Xeque), Felipe Silva Milanezi (UFRGS)",
+"r": "Partimos do entendimento que o capitalismo de vigilância (ZUBOFF, 2019) pode ter implicações na cultura política de uma sociedade, em especial de grupos que estejam habituados a consumir conteúdo digital e acessar as redes sociais com maior frequência, como é o caso dos jovens, uma vez que a internet é um agente socializador (MORAIS, 2017). Por isso, propomos investigar qual é o impacto do capitalismo de vigilância na cultura política dos jovens porto-alegrenses. Fizemos esta análise com dados de 2019, e agora vamos atualizar com dados de 2023, para observar se, após a pandemia, nossa hipótese continua sendo confirmada, de que o capitalismo de vigilância estimula valores mais individualizantes e uma rejeição à organização coletiva, com efeito nos valores e nas atitudes dos jovens."
+},
+{
+"t": "Declarações de privacidade: dispositivos jurídico-discursivos de legitimação do poder instrumentalizador em u… brasileira",
+"a": "Giovanna Costa Silva (UFU)",
+"tr": 1,
+"r": "Analisa-se, nesta pesquisa, de que modo as políticas de privacidade de plataformas digitais são elementos indispensáveis na legitimação do poder no capitalismo contemporâneo. Tomando como estudo de caso o histórico de declarações de privacidade do iFood, parte-se da hipótese de que esses documentos são actantes na rede sociotécnica que possibilitam a acumulação baseada em dados no capitalismo de plataforma ao legitimar relações assimétricas de conhecimento entre plataformas e usuários. A questão central consiste em compreender como tais declarações agem na consolidação do poder instrumentário ao normalizar a coleta massiva de dados, seu tratamento por sistemas automatizados e a expansão de práticas de vigilância para a modulação de comportamentos, apesar de tentativas de regulação a partir do direito individual, como a LGPD. Assim sendo, esse novo cenário desloca a questão da privacidade do âmbito individual, como encarada no paradigma liberal, para um problema eminentemente coletivo."
+},
+{
+"t": "O Panóptico Automatizado: Inteligência Artificial, Autoritarismo Digital e a Superação do Controle Orwellia…",
+"a": "Bruno Konder Comparato (UNIFESP)",
+"tr": 1,
+"r": "De que maneira a incorporação de sistemas de Inteligência Artificial (IA) e tomadas de decisão automatizadas por regimes autoritários contemporâneos reconfigura as estruturas de controle social, superando o modelo clássico de vigilância descrito por George Orwell na obra 1984? A pesquisa parte da hipótese de que a IA promove um salto qualitativo nas dinâmicas de dominação estatal. Enquanto o modelo orwelliano baseava-se na coerção visível, na centralização e na ameaça constante da tela, o autoritarismo digital atual opera por vias invisíveis, ubíquas e moleculares. A problemática central reside em compreender como a extração massiva de dados e o aprendizado de máquina transformaram a vigilância punitiva em um sistema de governamentalidade algorítmica preditiva. Esse arranjo neutraliza dissidências antes de sua manifestação pública, redefinindo de forma profunda e assimétrica as relações de poder entre o Estado e o cidadão."
+}
+],
+"local": "IEL · Miniauditório"
+},
+{
+"n": 3,
+"day": "2026-10-09",
+"from": "09:00",
+"to": "12:00",
+"title": "Trabalho, subjetividade e produção cultural",
+"coord": "Rafael de Almeida Evangelista (Labjor/Unicamp)",
+"deb": "Sergio Amadeu da Silveira (UFABC)",
+"papers": [
+{
+"t": "Nova reestruturação produtiva e efeitos ideológicos da inteligência artificial: da flexibilidade ao gerenciam…",
+"a": "Iuri Tonelo (UNIFESP)",
+"tr": 1,
+"r": "Esta pesquisa investiga a relação entre a nova reestruturação produtiva contemporânea e seus efeitos culturais e ideológicos. Parte-se de paralelos históricos com o fordismo, associado ao americanismo e ao puritanismo como formas de disciplina social, e com o toyotismo, marcado pela flexibilidade como princípio produtivo e ideológico. A hipótese central é que, após a crise de 2008, desenvolve-se uma nova configuração do trabalho, caracterizada pela plataformização, pela uberização e, mais recentemente, pela incorporação da inteligência artificial em processos de controle, vigilância e intensificação laboral. Nesse contexto, o gerenciamento algorítmico aparece não apenas como inovação técnica, mas como forma social de reorganização do trabalho e da subjetividade. O objetivo é analisar como essas transformações se expressam cultural e ideologicamente."
+},
+{
+"t": "IA conversacional e modulação afetiva: antropomorfismo e poder nas interações humano–máquina",
+"a": "David Leonardo Barsand de Leucas (UFSCar), Sylvia Iasulaitis (Universidade Federal de São Ca)",
+"r": "A pesquisa investiga quais formas de poder, mediação afetiva e transferência de autoridade emergem quando sistemas de IA conversacional são desenhados para operar como agentes subjetivos. \"Questiona-se em que medida o design antropomórfico pode contribuir para a modulação da experiência emocional humana, favorecendo sua tradução para categorias computacionalmente processáveis e ampliando processos de transferência de autoridade epistêmica para arquiteturas algorítmicas.\" O foco recai na análise de como a simulação de empatia e escuta ativa reconfigura a agência afetiva do usuário, promovendo uma delegação de legitimidade interpretativa à máquina por meio de fenômenos como o paradigma CASA (Computers as Social Actors) e o efeito ELIZA."
+},
+{
+"t": "Fantasmas na Rede: presença e recepção de conteúdos gerados por IA nas redes sociais",
+"a": "Tathiana Senne Chicarino (Escola Sociologia e Política), Rosemary Segurado (Coletivo Digital)",
+"r": "Em Junho de 2026 o CEO da Cloudflare, empresa que transita em média 78 milhões de requisições HTTP por segundo e é utilizada por mais de 20% de todos os sites do mundo, afirmou na rede social X que o tráfego web de bots ultrapassou o de humanos pela primeira vez na história da internet. O episódio evidencia a dependência estrutural global com atores privados específicos, sobre os quais exercemos pouca ou nenhuma governança. Neste trabalho, buscamos entender como os usuários brasileiros percebem, consomem e dão sentido a penetração do conteúdo criado por IAs nas redes sociais, analisando processos de modulação de comportamento e situando as experiências no quadro do colonialismo de dados e da dependência de plataformas, infraestrutura e modelos do norte global."
+},
+{
+"t": "Inteligência artificial generativa e gambiarra contra-hegemônica: uma análise tecnopolítica dos vídeos do l… propaganda de guerra pró-Irã",
+"a": "Nahema Falleiros (IEA-USP), Danielle Soares e Silva Bicudo Ferraro (PUC-SP/Edutecia), Artur Marques da Silva Neto (UERN), Marcelo Aparecido de Faria Junior (UFABC)",
+"tr": 1,
+"r": "Uma diretiva de controle de exportação dos EUA levou a Anthropic a suspender, em junho de 2026, o acesso a seus grandes modelos de linguagem natural, evidenciando o peso econômico e geopolítico da inteligência artificial generativa (IA Gen) na propaganda de guerra. Se, por um lado, o uso desses modelos mais avançados permanece sob controle das nações centrais, por outro, versões menos avançadas podem ser usadas por nações periféricas como soluções improvisadas (gambiarra) e de baixo custo. Os vídeos pró-Irã produzidos e disseminados pelo canal Explosive Media levam à nossa questão central: como o uso da IA Gen pode, sobretudo na propaganda de guerra, tensionar disputas informacionais e ampliar a capacidade de intervenção das nações periféricas que não controlam a produção dessa tecnologia? A hipótese é de que a IA Gen, enquanto infraestrutura tecnopolítica pode reduzir barreiras econômicas e técnicas, permitindo que atores não-hegemônicos disputem visibilidade, atenção e legitimidade."
+},
+{
+"t": "O jogo da escuta artificial: quando chatbots ocupam o lugar de conselheiros e terapeutas",
+"a": "Mônica Gurjão Carvalho (UFABC)",
+"link": "https://preprints.scielo.org/index.php/scielo/preprint/view/17483",
+"r": "Em 1950, Alan Turing publicou Computing Machinery and Intelligence, no qual questiona: “Can machines think?”. Antes de responder à pergunta — o que exigiria definir pensamento e inteligência — propôs um deslocamento: refletir sobre a possibilidade de uma máquina passar-se por humana. Seríamos capazes de discernir essa fronteira? A esse experimento, Turing denominou “jogo da imitação”. Desde então, os sistemas computacionais tornaram-se progressivamente complexos. Contudo, parafraseando Donna Haraway (2023), mostra-se produtivo “ficar com o problema”, reconhecendo que, embora Turing tenha evidenciado a capacidade imitativa das máquinas, urge tensionar os limites desse mimetismo. Esse debate adquire relevância diante da utilização de Large Language Models (LLMs) e agentes da IA´s como terapeutas e conselheiros, reivindicando atributos como empatia e afetividade. Assim, as máquinas passam a disputar uma ontologia com os humanos, sendo posicionadas como sujeitos no campo clínico."
+}
+],
+"local": "IEL · Centro Cultural · Miniauditório"
+},
+{
+"n": 4,
+"day": "2026-10-09",
+"from": "14:00",
+"to": "17:00",
+"title": "Estado, instituições e produção do conhecimento",
+"coord": "Rosemary Segurado (Coletivo Digital)",
+"deb": "Sergio Braga (UFPR)",
+"papers": [
+{
+"t": "Algoritmos de nível de rua? dilemas da digitalização no serviço público",
+"a": "Gabriel Boscardim de Moraes (UFABC/Lablivre), Sergio Amadeu da Silveira (UFABC)",
+"link": "https://preprints.scielo.org/index.php/scielo/preprint/view/17553",
+"r": "O trabalho discute criticamente a noção de “algoritmos de nível de rua”, utilizada para descrever sistemas automatizados de inteligência artificial que mediam a prestação de serviços públicos e afetam decisões anteriormente tomadas por burocratas de nível de rua. O artigo busca compreender como diferentes formas de digitalização estatal interferem na discricionariedade dos agentes públicos, na transparência administrativa e no acesso da população às políticas públicas. Argumenta-se que a adoção de sistemas rígidos e automatizados pode ampliar opacidades, dificultar a resolução de casos concretos e aprofundar desigualdades sociais, especialmente em contextos marcados por dependência tecnológica, baixa inclusão digital e terceirização de infraestruturas para Big Techs. O artigo detalha ainda um grau de complexidade e de opacidade ainda maior com a expansão do uso dos sistemas automatizados chamados amplamente de Inteligência Artificial."
+},
+{
+"t": "Instituições Autoritárias Inscritas em Código: inteligência artificial e a reconfiguração da autoridade jornalí…",
+"a": "Rafael de Almeida Evangelista (Labjor/Unicamp), Sâmela de Carvalho Lima (UNICAMP/UNASP), Ana Carolina Paes de Mello (Labjor Unicamp), Angelus Ferreira Simões (Unicamp)",
+"tr": 1,
+"r": "O artigo investiga o que ocorre com a autoridade jornalística quando padrões e temas das notícias passam a ser estimulados e em parte produzidos por sistemas das big techs, que se consolidaram como intermediárias entre veículos e leitores (Evangelista, 2026). A dadificação da audiência — medição de tempo de leitura, cliques, consumo individualizado — já vinha reorganizando o campo, e a IA se agrega a essa trajetória primeiro pela curadoria dos feeds e, mais recentemente, pela incorporação dos mecanismos de produção automática ao próprio fazer das redações, afetando de modo distinto etapas como a seleção de pautas, a produção automatizada de textos e a distribuição. Esses processos se somam a uma crise do jornalismo, paralela ao desenvolvimento tecnológico, mas que é por ele intensificado num desfazimento mais amplo das instituições. O conjunto faz aparecer um ator novo e pouco visível, que dá forma/conteúdo ao jornalismo: as Instituições Autoritárias Inscritas em Código (IAIC)."
+},
+{
+"t": "Mapeamento da adoção da inteligência artificial na educação básica brasileira: dependência tecnológica e … digital",
+"a": "Lívia Carolina Vieira (IFSULDEMINAS), Danielle Soares e Silva Bicudo Ferraro (PUC-SP/Edutecia), Paula Cristina Santos Menezes (UFRJ)",
+"link": "https://preprints.scielo.org/index.php/scielo/authorDashboard/submission/17787",
+"tr": 1,
+"r": "A rápida incorporação de sistemas de Inteligência Artificial (IA) pelas redes públicas de ensino brasileiras ocorre em meio à expansão de Big Techs e EdTechs neste cenário. Após a popularização do ChatGPT, em 2023, plataformas de correção, assistentes de IA e sistemas automatizados de gestão, avaliação e apoio pedagógico passaram a ser adotados, sob o discurso de inovação, por secretarias estaduais e municipais do país. Neste contexto, este trabalho mapeou a adoção de ferramentas de IA na educação, observando modelos de contratação, acordos e parcerias que estão sendo estabelecidos entre secretarias e empresas de tecnologia, para então analisar em que medida a adoção dessas ferramentas de IA ampliam processos de dependência infraestrutural e tecnológica. Parte-se da questão central de que a expansão da IA na educação pública representa uma reconfiguração da práticas educacionais, marcadas pela crescente infiuência de plataformas privadas sobre dados, gestão e práticas pedagógicas."
+},
+{
+"t": "Inteligência Artificial e a Decisão do Uso da Força: Racionalidade Algorítmica e Aceleração do Ciclo de Viol…",
+"a": "Jonathan de Araujo de Assis (IPPRI-Unesp), Marianna Braghini Deus Deu (San Tiago Dantas)",
+"tr": 1,
+"r": "O uso de tecnologias de Inteligência Artificial (IA) para fins militares tem sido amplamente debatido. Enquanto defensores argumentam que a IA aprimora a precisão e reduz danos colaterais, críticos alertam para os riscos de escalada e desumanização da guerra. Esta apresentação contribui para o debate ao argumentar que a IA acelera o ciclo da violência, especialmente nas tomadas de decisão sobre o uso da força. Para sustentar essa análise, a pesquisa realiza uma revisão crítica da literatura, contextualizando a origem da chamada racionalidade algorítmica na Guerra Fria e traçando paralelos com a doutrina militar contemporânea, particularmente no que concerne ao conceito de superioridade informacional e suas implicações para a estratégia e a condução de conflitos. Examina-se como a busca por velocidade e precisão nas decisões militares, impulsionada pela IA, pode intensificar a violência, como evidenciado na campanha de bombardeios de Israel em Gaza."
+},
+{
+"t": "IA nas Ciências Sociais: balanço do debate para fortalecer uma agenda de pesquisa brasileira",
+"a": "Priscila Pereira Faria Vieira (CEBRAP)",
+"r": "Diante da rápida expansão da IA na sociedade, este trabalho parte de uma questão básica: quais são os consensos, controvérsias e principais temas de pesquisa que vêm orientando a produção acadêmica das Ciências Sociais (internacional e nacional) sobre as condições de produção, usos e impactos da inteligência artificial? Busca-se mapear o estágio de desenvolvimento desse campo emergente, identificando como ele dialoga com outras disciplinas e quais recortes, conceitos e problematizações específicas as Ciências Sociais vêm oferecendo para compreender a IA como um fenômeno sociotécnico, com implicações para classes sociais, gênero, raça, trabalho, democracia, ética e geopolítica. O levantamento também busca apontar as lacunas e os temas pouco desenvolvidos para apontar caminhos de fortalecimento dessa agenda de pesquisa nas ciências sociais brasileiras."
+}
+],
+"local": "IEL · Centro Cultural · Miniauditório"
+}
 ];
 S.forEach(s=>s.papers.forEach((p,i)=>{p.id="s"+s.n+"p"+(i+1)}));
 
@@ -145,13 +285,13 @@ function renderTabs(){
 function render(){
   const needle=q.trim().toLowerCase();
   const list=S.filter(s=>s.day===day).map(s=>({...s,papers:s.papers.filter(p=>
-    (!favOnly||favs.has(p.id))&&(!needle||(p.t+" "+p.a+" "+s.title).toLowerCase().includes(needle)))})).filter(s=>s.papers.length);
+    (!favOnly||favs.has(p.id))&&(!needle||(p.t+" "+p.a+" "+p.r+" "+s.title).toLowerCase().includes(needle)))})).filter(s=>s.papers.length);
   $("out").innerHTML=list.length?list.map(s=>{
     const st=status(s);
     const badge=st==="live"?'<span class="badge">Acontecendo agora</span>':st==="next"?'<span class="badge next">Próxima sessão</span>':"";
     return `<section class="session">
       <div class="s-head">
-        <div class="s-time"><span>${s.from}–${s.to}</span><span>IEL · Miniauditório</span>${badge}</div>
+        <div class="s-time"><span>${s.from}–${s.to}</span><span>${esc(s.local)}</span>${badge}</div>
         <div class="s-num" aria-hidden="true">${s.n}</div>
         <h2><span class="kicker" style="display:block">Sessão ${String(s.n).padStart(2,"0")}</span>${esc(s.title)}</h2>
         <div class="roles"><span>Coordenação: <b>${esc(s.coord)}</b></span><span>Debate: <b>${esc(s.deb)}</b></span></div>
@@ -159,9 +299,9 @@ function render(){
       <ol>${s.papers.map(p=>{const idx=S.find(x=>x.n===s.n).papers.indexOf(p)+1;const on=favs.has(p.id);
         return `<li class="paper"><span class="n">${idx}</span>
           <div class="p-main"><h3 class="p-title">${esc(p.t)}</h3><p class="p-auth">${esc(p.a)}</p>
-          ${p.tr?'<span class="trunc">título cortado na fonte</span>':""}
+          ${p.tr?'<span class="trunc">título cortado na fonte</span> ':""}
           ${p.link?`<div class="p-links"><a href="${p.link}" target="_blank" rel="noopener">Ler no SciELO Preprints</a></div>`:""}
-          ${p.pdf&&!p.link?'<div class="p-links"><span class="trunc">texto para download no site do evento</span></div>':""}</div>
+          <details><summary>Resumo</summary><p class="abs">${esc(p.r)}</p></details></div>
           <button class="star" data-id="${p.id}" aria-pressed="${on}" aria-label="${on?"Remover dos favoritos":"Favoritar"}">${on?"★":"☆"}</button></li>`}).join("")}</ol></section>`}).join("")
     :`<p class="empty">${favOnly?"Você ainda não favoritou trabalhos neste dia.":"Nenhum trabalho encontrado."}</p>`;
 }
