@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Programação GT56</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: cabeçalho fixo com abas de dia; uma coluna de sessões, cada uma com lista de trabalhos numerada na ordem do programa. */
+:root{
+  --bg:#f5f4f1; --surface:#ffffff; --fg:#17181c; --muted:#5d606b; --line:#dcdad3;
+  --accent:#d6423b; --accent-fg:#ffffff; --accent-soft:#fbe6e3; --live:#17795a; --live-soft:#dff2ea;
+  --font-display:'Bricolage Grotesque','Helvetica Neue',Arial,sans-serif;
+  --font-body:'IBM Plex Sans','Helvetica Neue',Arial,sans-serif;
+  --font-mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#121317; --surface:#1b1d23; --fg:#ececef; --muted:#9a9ea9; --line:#2d3039;
+  --accent:#ff6a60; --accent-fg:#16171a; --accent-soft:#3a1f1e; --live:#4fd1a1; --live-soft:#173328; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121317; --surface:#1b1d23; --fg:#ececef; --muted:#9a9ea9; --line:#2d3039;
+  --accent:#ff6a60; --accent-fg:#16171a; --accent-soft:#3a1f1e; --live:#4fd1a1; --live-soft:#173328; color-scheme:dark}
+html{color-scheme:light dark}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 var(--font-body)}
+*{box-sizing:border-box}
+.wrap{max-width:820px;margin:0 auto;padding-inline:16px;padding-block:0 64px}
+header{padding-block:28px 12px}
+.kicker{font:500 12px var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+h1{font:800 clamp(28px,6vw,44px)/1.05 var(--font-display);margin:6px 0 10px;text-wrap:balance;letter-spacing:-.01em}
+.meta{color:var(--muted);max-width:62ch;margin:0}
+.meta b{color:var(--fg);font-weight:600}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:10px;border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:10px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap}
+.tab{font:600 14px var(--font-body);border:1px solid var(--line);background:var(--surface);color:var(--fg);padding:8px 14px;border-radius:8px;cursor:pointer;display:flex;flex-direction:column;align-items:flex-start;line-height:1.2}
+.tab small{font:400 11px var(--font-mono);color:var(--muted)}
+.tab[aria-selected="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.tab[aria-selected="true"] small{color:var(--bg);opacity:.75}
+.tools{display:flex;gap:8px;flex-wrap:wrap}
+input[type=search]{flex:1 1 200px;min-width:0;font:inherit;padding:8px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--fg)}
+.chip{font:500 13px var(--font-body);padding:8px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--fg);cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--accent);color:var(--accent-fg);border-color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.session{margin-top:28px}
+.s-head{display:grid;grid-template-columns:auto 1fr;gap:4px 16px;align-items:start}
+.s-time{font:500 13px var(--font-mono);color:var(--muted);grid-column:1/-1;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.badge{font:600 11px var(--font-mono);letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:99px;background:var(--live-soft);color:var(--live)}
+.badge.next{background:var(--accent-soft);color:var(--accent)}
+.s-num{font:800 52px/0.9 var(--font-display);color:var(--accent)}
+h2{font:700 clamp(20px,4vw,26px)/1.15 var(--font-display);margin:0;text-wrap:balance}
+.roles{grid-column:1/-1;display:flex;gap:6px 24px;flex-wrap:wrap;color:var(--muted);font-size:13px;margin-top:6px}
+.roles b{color:var(--fg);font-weight:500}
+ol{list-style:none;margin:14px 0 0;padding:0;display:flex;flex-direction:column;gap:10px}
+li.paper{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 14px 12px;display:grid;grid-template-columns:28px 1fr auto;gap:2px 10px;min-width:0}
+.n{font:500 13px var(--font-mono);color:var(--muted);padding-top:3px}
+.p-main{min-width:0}
+.p-title{font:600 16px/1.35 var(--font-body);margin:0;text-wrap:pretty}
+.p-auth{color:var(--muted);font-size:13px;margin:4px 0 0}
+.p-links{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px;font-size:13px}
+a{color:var(--accent)}
+.star{border:0;background:none;font-size:22px;line-height:1;cursor:pointer;color:var(--muted);padding:2px 4px;border-radius:6px}
+.star[aria-pressed="true"]{color:var(--accent)}
+.trunc{font:400 11px var(--font-mono);color:var(--muted)}
+.empty{color:var(--muted);padding:32px 0;text-align:center}
+footer{margin-top:40px;color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding-top:16px}
+footer p{margin:0 0 6px;max-width:68ch}
+.theme{margin-left:auto}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div class="kicker">50º Encontro Anual da ANPOCS · Unicamp · 7 a 9 de outubro de 2026</div>
+    <h1>GT56. Inteligência Artificial, Sociedade, Cultura e Poder</h1>
+    <p class="meta">Coordenação: <b>Rafael de Almeida Evangelista</b> (Unicamp) e <b>Sergio Amadeu da Silveira</b> (UFABC). Todas as sessões no IEL, Miniauditório.</p>
+  </header>
+
+  <div class="bar">
+    <div class="tabs" role="tablist" id="tabs"></div>
+    <div class="tools">
+      <input type="search" id="q" placeholder="Buscar título, autor ou instituição" aria-label="Buscar">
+      <button class="chip" id="favOnly" aria-pressed="false">★ Meus favoritos</button>
+      <button class="chip theme" id="theme" aria-label="Alternar tema">Tema</button>
+    </div>
+  </div>
+
+  <main id="out"></main>
+
+  <footer>
+    <p>Fonte: página do GT56 no site do Encontro (encontro2026.anpocs.org.br), versão impressa em 06/10/2026. Os horários dos trabalhos dentro de cada sessão não constam na fonte.</p>
+    <p>Títulos terminados em “…” aparecem cortados na fonte; confira o título completo no site do evento. O programa pode ter mudado desde a data da fonte.</p>
+  </footer>
+</div>
+
+<script>
+const BASE="https://preprints.scielo.org/index.php/scielo/";
+const DAYS=[{id:"2026-10-07",label:"Qua 7/10"},{id:"2026-10-08",label:"Qui 8/10"},{id:"2026-10-09",label:"Sex 9/10"}];
+const S=[
+{n:1,day:"2026-10-07",from:"14:00",to:"17:00",title:"Soberania, dependência e regulação da IA",coord:"Rafael de Almeida Evangelista (Labjor/Unicamp)",deb:"Sergio Amadeu da Silveira (UFABC)",papers:[
+ {t:"Dependência tecnológica e disputas de poder: soberania digital e regulação da inteligência artificial no Bra… Europeia",a:"Felipe Chieregato Gretschischkin (NDD-Cebrap)",tr:1},
+ {t:"Empresas públicas de informática e soberania digital em escala subnacional no Brasil",a:"Sergio Braga (UFPR), Rangel Ramiro Ramos (INCT.DD/UFPR), Lucas Eduardo Zulin (UFPR), R… Linhares e Padilha (UFPR)",pdf:1},
+ {t:"Governar a IA desde a periferia: como a regulação brasileira reproduz a dependência que diz enfrentar",a:"Ana Carolina das Neves Silva da Hora (Unicamp / Instituto da Hora), Janaina Oliveira Pamplona da Costa (DPCT Unicamp), …"},
+ {t:"A Inteligência Artificial (IA) chinesa: características, desdobramentos externos e impactos para o Brasil",a:"Valéria Lopes Ribeiro (UFABC)"},
+ {t:"Financeirização, dependência e transição verde-digital: o papel das debêntures na expansão de data cente…",a:"Antônio Victor de Mendonça Moreira (UFC), Alba Maria Pinho de Carvalho (UFC)",pdf:1,tr:1}]},
+{n:2,day:"2026-10-08",from:"14:00",to:"17:00",title:"Vigilância, dados e corpos",coord:"Sergio Amadeu da Silveira (UFABC)",deb:"Rafael de Almeida Evangelista (Labjor/Unicamp)",papers:[
+ {t:"Emprego de Telemetria e Videomonitoramento em Caminhões do TRC Brasileiro: Quando Trabalhadores Conve… Ecossistema das Big Techs",a:"Diego dos Santos Moura Gonçalves (Universidade de São Paulo)",tr:1},
+ {t:"Mulheres ciborgues: dados, poder e exploração do feminino no capitalismo de vigilância",a:"Fabiana Jordão Martinez"},
+ {t:"Capitalismo de vigilância, desinformação e valores democráticos entre jovens de Porto Alegre/RS",a:"Jennifer Azambuja de Morais (UFRGS), Alexsander Dugno Chiodi (Instituto Democracia em Xeque), Felipe Silva Milane…"},
+ {t:"Declarações de privacidade: dispositivos jurídico-discursivos de legitimação do poder instrumentalizador em u… brasileira",a:"Giovanna Costa Silva (UFU)",tr:1},
+ {t:"O Panóptico Automatizado: Inteligência Artificial, Autoritarismo Digital e a Superação do Controle Orwellia…",a:"Bruno Konder Comparato (UNIFESP)",tr:1}]},
+{n:3,day:"2026-10-09",from:"09:00",to:"12:00",title:"Trabalho, subjetividade e produção cultural",coord:"Rafael de Almeida Evangelista (Labjor/Unicamp)",deb:"Sergio Amadeu da Silveira (UFABC)",papers:[
+ {t:"Nova reestruturação produtiva e efeitos ideológicos da inteligência artificial: da flexibilidade ao gerenciam…",a:"Iuri Tonelo (UNIFESP)",tr:1},
+ {t:"IA conversacional e modulação afetiva: antropomorfismo e poder nas interações humano–máquina",a:"David Leonardo Barsand de Leucas (UFSCar), Sylvia Iasulaitis (UFSCar)"},
+ {t:"Fantasmas na Rede: presença e recepção de conteúdos gerados por IA nas redes sociais",a:"Tathiana Senne Chicarino (Escola de Sociologia e Política), Rosemary Segurado (Coletivo Digital)"},
+ {t:"Inteligência artificial generativa e gambiarra contra-hegemônica: uma análise tecnopolítica dos vídeos do l… propaganda de guerra pró-Irã",a:"Nahema Falleiros (IEA-USP), Danielle Soares e Silva Bicudo Ferraro (PUC-SP/Edutecia), Artur Marques da Silva Neto (U…), Marcelo Aparecido de Faria Junior (UFABC)",tr:1},
+ {t:"O jogo da escuta artificial: quando chatbots ocupam o lugar de conselheiros e terapeutas",a:"Mônica Gurjão Carvalho (UFABC)",link:BASE+"preprint/view/17483"}]},
+{n:4,day:"2026-10-09",from:"14:00",to:"17:00",title:"Estado, instituições e produção do conhecimento",coord:"Rosemary Segurado (Coletivo Digital)",deb:"Sergio Braga (UFPR)",papers:[
+ {t:"Algoritmos de nível de rua? dilemas da digitalização no serviço público",a:"Gabriel Boscardim de Moraes (UFABC/Lablivre), Sergio Amadeu da Silveira (UFABC)",link:BASE+"preprint/view/17553"},
+ {t:"Instituições Autoritárias Inscritas em Código: inteligência artificial e a reconfiguração da autoridade jornalí…",a:"Rafael de Almeida Evangelista (Labjor/Unicamp), Sâmela de Carvalho Lima (UNICAMP/UNASP), Ana Carolina Paes de …, Angelus Ferreira Simões (Unicamp)",tr:1},
+ {t:"Mapeamento da adoção da inteligência artificial na educação básica brasileira: dependência tecnológica e … digital",a:"Lívia Carolina Vieira (IFSULDEMINAS), Danielle Soares e Silva Bicudo Ferraro (PUC-SP/Edutecia), Paula Cristina Santos … (UFRJ)",link:BASE+"authorDashboard/submission/17787",tr:1},
+ {t:"Inteligência Artificial e a Decisão do Uso da Força: Racionalidade Algorítmica e Aceleração do Ciclo de Viol…",a:"Jonathan de Araujo de Assis (IPPRI-Unesp), Marianna Braghini Deus Deu (San Tiago Dantas)",tr:1},
+ {t:"IA nas Ciências Sociais: balanço do debate para fortalecer uma agenda de pesquisa brasileira",a:"Priscila Pereira Faria Vieira (CEBRAP)",pdf:1}]}
+];
+S.forEach(s=>s.papers.forEach((p,i)=>{p.id="s"+s.n+"p"+(i+1)}));
+
+const $=id=>document.getElementById(id);
+const store={get(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+let favs=new Set(store.get("gt56.favs",[]));
+let favOnly=false, q="";
+const fmt=new Intl.DateTimeFormat("en-CA",{timeZone:"America/Sao_Paulo",year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",hourCycle:"h23"});
+function nowBR(){const p=Object.fromEntries(fmt.formatToParts(new Date()).map(x=>[x.type,x.value]));return{date:`${p.year}-${p.month}-${p.day}`,time:`${p.hour}:${p.minute}`}}
+function status(s){const n=nowBR();const start=s.day+" "+s.from,end=s.day+" "+s.to,cur=n.date+" "+n.time;
+  if(cur>=start&&cur<end)return"live";
+  const next=S.filter(x=>x.day+" "+x.from>cur).sort((a,b)=>(a.day+a.from).localeCompare(b.day+b.from))[0];
+  return next&&next.n===s.n?"next":""}
+let day=(()=>{const d=nowBR().date;return DAYS.some(x=>x.id===d)?d:DAYS[0].id})();
+if(location.hash&&/^#d\d$/.test(location.hash)){}
+const esc=t=>t.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+function renderTabs(){
+  $("tabs").innerHTML=DAYS.map(d=>{const c=S.filter(s=>s.day===d.id).length;
+    return `<button class="tab" role="tab" data-d="${d.id}" aria-selected="${d.id===day}">${d.label}<small>${c} ${c>1?"sessões":"sessão"}</small></button>`}).join("");
+}
+function render(){
+  const needle=q.trim().toLowerCase();
+  const list=S.filter(s=>s.day===day).map(s=>({...s,papers:s.papers.filter(p=>
+    (!favOnly||favs.has(p.id))&&(!needle||(p.t+" "+p.a+" "+s.title).toLowerCase().includes(needle)))})).filter(s=>s.papers.length);
+  $("out").innerHTML=list.length?list.map(s=>{
+    const st=status(s);
+    const badge=st==="live"?'<span class="badge">Acontecendo agora</span>':st==="next"?'<span class="badge next">Próxima sessão</span>':"";
+    return `<section class="session">
+      <div class="s-head">
+        <div class="s-time"><span>${s.from}–${s.to}</span><span>IEL · Miniauditório</span>${badge}</div>
+        <div class="s-num" aria-hidden="true">${s.n}</div>
+        <h2><span class="kicker" style="display:block">Sessão ${String(s.n).padStart(2,"0")}</span>${esc(s.title)}</h2>
+        <div class="roles"><span>Coordenação: <b>${esc(s.coord)}</b></span><span>Debate: <b>${esc(s.deb)}</b></span></div>
+      </div>
+      <ol>${s.papers.map(p=>{const idx=S.find(x=>x.n===s.n).papers.indexOf(p)+1;const on=favs.has(p.id);
+        return `<li class="paper"><span class="n">${idx}</span>
+          <div class="p-main"><h3 class="p-title">${esc(p.t)}</h3><p class="p-auth">${esc(p.a)}</p>
+          ${p.tr?'<span class="trunc">título cortado na fonte</span>':""}
+          ${p.link?`<div class="p-links"><a href="${p.link}" target="_blank" rel="noopener">Ler no SciELO Preprints</a></div>`:""}
+          ${p.pdf&&!p.link?'<div class="p-links"><span class="trunc">texto para download no site do evento</span></div>':""}</div>
+          <button class="star" data-id="${p.id}" aria-pressed="${on}" aria-label="${on?"Remover dos favoritos":"Favoritar"}">${on?"★":"☆"}</button></li>`}).join("")}</ol></section>`}).join("")
+    :`<p class="empty">${favOnly?"Você ainda não favoritou trabalhos neste dia.":"Nenhum trabalho encontrado."}</p>`;
+}
+$("tabs").addEventListener("click",e=>{const b=e.target.closest(".tab");if(!b)return;day=b.dataset.d;renderTabs();render()});
+$("out").addEventListener("click",e=>{const b=e.target.closest(".star");if(!b)return;const id=b.dataset.id;favs.has(id)?favs.delete(id):favs.add(id);store.set("gt56.favs",[...favs]);render()});
+$("q").addEventListener("input",e=>{q=e.target.value;render()});
+$("favOnly").addEventListener("click",e=>{favOnly=!favOnly;e.currentTarget.setAttribute("aria-pressed",favOnly);render()});
+$("theme").addEventListener("click",()=>{const r=document.documentElement;const dark=r.dataset.theme?r.dataset.theme==="dark":matchMedia("(prefers-color-scheme: dark)").matches;r.dataset.theme=dark?"light":"dark"});
+renderTabs();render();setInterval(render,60000);
+</script>
+</body>
+</html>
